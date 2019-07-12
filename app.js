@@ -31,5 +31,6 @@ app.get('/', (req, res) => {
 
 app.post('/bathroom', (req, res) => {
   console.log(req.text)
+  res.send(req.text)
   return res.status(201).send(req.body)
 })
