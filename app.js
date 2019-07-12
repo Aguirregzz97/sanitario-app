@@ -3,7 +3,7 @@ var app = express()
 const path = require('path')
 
 app.listen(process.env.PORT || 3000)
-
+var occupied = '0'
 
 // to allow cors
 /*
@@ -26,11 +26,11 @@ app.use(function(req, res, next){
 })
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname+ '/index.html'))
+  res.send(occupied)
 })
 
 app.post('/bathroom', (req, res) => {
   console.log(req.text)
-  res.send(req.text)
+  occupied = req.text
   return res.status(201).send(req.body)
 })
