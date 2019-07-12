@@ -1,9 +1,10 @@
 var express = require('express')
 var app = express()
 const path = require('path')
+var MongoClient = require('mongodb').MongoClient
+const url = "mongodb+srv://andres-aguirre:J01GtxiiqmWVhPkC@inventariosanaencasa-5zhij.mongodb.net/test?retryWrites=true"
 
 app.listen(process.env.PORT || 3000)
-var occupied = '0'
 
 // to allow cors
 /*
@@ -25,12 +26,20 @@ app.use(function(req, res, next){
   }
 })
 
-app.get('/', (req, res) => {
-  res.send(occupied)
+app.get('/', async (req, res) => {
+  const client = await MongoClient.connect(url, {
+    useNewUrlParser: true
+  })
+  const occupied = await client.db('SanaEnCasaDB').collection('sanitario').find().toArray()
+  console.log(occupied)
+  res.send(occupied[0].occupied)
 })
 
-app.post('/bathroom', (req, res) => {
+app.post('/bathroom', async (req, res) => {
+  const client = await MongoClient.connect(url, {
+    useNewUrlParser: true
+  })
+  await client.db('SanaEnCasaDB').collection('sanitario').update( { id: '1' }, {id: '1', occupied: req.text } )
   console.log(req.text)
-  occupied = req.text
   return res.status(201).send(req.body)
 })

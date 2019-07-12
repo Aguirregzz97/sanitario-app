@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongodb": "^3.2.7"
   },
   "scripts": {
     "start": "node app.js"
